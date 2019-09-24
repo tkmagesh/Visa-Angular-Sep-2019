@@ -19,6 +19,31 @@
             padding: 10px;
         }
     </style>
+    <script src="jquery-3.4.1.js"></script>
+    <script>
+        $.fn.extend({
+            toFloat : function(){
+                return parseFloat($(this).val());
+            }
+        });
+
+
+        $(function(){
+            $('#btnCalculate').click(() => {
+                const basic = $('#txtBasic').toFloat(),
+                    hra = $('#txtHra').toFloat(),
+                    da = $('#txtDa').toFloat(),
+                    tax = $('#rangeTax').toFloat();
+
+                const gross = basic + hra + da,
+                    net = gross * ((100-tax)/100);
+
+                $('#tdSalary').html(net);
+
+
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Salary Calculator</h1>
@@ -47,7 +72,7 @@
  		<table>
  			<tbody>
  				<tr>
- 					<td>[Salary]</td>
+ 					<td id="tdSalary">[Salary]</td>
  				</tr>
  			</tbody>
  		</table>
