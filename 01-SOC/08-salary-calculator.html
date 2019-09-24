@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Salary Calculator</title>
+    <style>
+        body{
+            margin-left: 50px;
+        }
+        .field{
+            margin-bottom: 10px;
+        }
+        label{
+            display: block;
+        }
+        td{
+            font-size: 18pt;
+            padding: 10px;
+        }
+    </style>
+    <script src="jquery-3.4.1.js"></script>
+    <script>
+        $.fn.extend({
+            toFloat : function(){
+                return parseFloat($(this).val());
+            }
+        });
+
+        //state & behavior 
+        class SalaryCalculatorModel{
+            //state
+            _data = {
+                basic : 0,
+                hra : 0,
+                da : 0,
+                tax : 0,
+                salary : 0
+            };
+
+            _callbacks = {
+                basic : [],
+                hra : [],
+                da : [],
+                tax : [],
+                salary : []
+            };
+
+            subscribe(attrName, callback){
+                this._callbacks[attrName].push(callback);
+            }
+
+            get(attrName){
+                return this._data[attrName];
+            }
+
+            set(attrName, value){
+                if (this._data[attrName] === value) return;
+                this._data[attrName] = value;
+                this._callbacks[attrName].forEach(callback => {
+                    if (typeof callback === 'function')
+                        callback();
+                });
+            }
+            //behavior
+            calculate(){
+                const gross = this.get('basic') + this.get('hra') + this.get('da'),
+                    net = gross * ((100-this.get('tax'))/100);
+                this.set('salary', net);
+            }
+        }
+
+        class SalaryCalculator{
+            
+            model = null;
+
+            //presentation
+            _template = `
+            <section>
+                <div class="field">
+                    <label for="">Basic :</label
+                        ><input type="number" name="" id="txtBasic">
+                    </div>
+                <div class="field">
+                    <label for="">HRA :</label>
+                    <input type="number" name="" id="txtHra">
+                    </div>
+                <div class="field">
+                    <label for="">DA :</label>
+                    <input type="number" name="" id="txtDa">
+                    </div>
+                <div class="field">
+                    <label for="">Tax :</label>
+                    <input type="range" name="" id="rangeTax" min="0" max="30" value="0">
+                    </div>
+                <div class="field">
+                    <input type="button" value="Calculate" id="btnCalculate">
+                </div>
+                <div class="field">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td id="tdBasic"></td>
+                                <td id="tdHra"></td>
+                                <td id="tdDa"></td>
+                                <td id="tdTax"></td>
+                                <td id="tdSalary">[Salary]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            `;
+
+            $root = $('<div></div>');
+
+            render(){
+                this.$root.html(this._template);
+            }
+            
+            constructor(model){
+                this.model = model;
+
+                const self = this;
+
+                //Reacting to user actions
+                this.$root.on('change', '#txtBasic',function() {
+                    model.set('basic', $(this).toFloat());
+                });
+
+                this.$root.on('change', '#txtHra',function() {
+                    model.set('hra', $(this).toFloat());
+                });
+
+                this.$root.on('change', '#txtDa',function() {
+                    model.set('da', $(this).toFloat());
+                });
+
+                this.$root.on('change', '#rangeTax',function() {
+                    model.set('tax', $(this).toFloat());
+                });
+
+
+                this.$root.on('click', '#btnCalculate',function() {
+                    model.calculate();
+                });
+
+
+                //Reacting to model changes
+                model.subscribe('salary', function(){
+                    $('#tdSalary', self.$root).html(model.get('salary'));
+                });
+
+                model.subscribe('basic', function(){
+                    $('#tdBasic', self.$root).html(model.get('basic'));
+                });
+
+                model.subscribe('hra', function(){
+                    $('#tdHra', self.$root).html(model.get('hra'));
+                });
+
+                model.subscribe('da', function(){
+                    $('#tdDa', self.$root).html(model.get('da'));
+                });
+
+                model.subscribe('tax', function(){
+                    $('#tdTax', self.$root).html(model.get('tax'));
+                });
+            }
+        }
+
+        $(function(){
+            window['model'] = new SalaryCalculatorModel();
+            /*
+            var v1 = new SalaryCalculator(model)
+            v1.$root.appendTo(document.body)
+            
+            v1.render()
+            var v2 = new SalaryCalculator(model)
+            v2.$root.appendTo(document.body)
+            
+            v2.render()
+            //Enter the data in the text boxes
+            model.calculate()
+            */
+           
+        });
+    </script>
+</head>
+<body>
+    <h1>Salary Calculator</h1>
+ <hr>
+
+</body>
+</html>
