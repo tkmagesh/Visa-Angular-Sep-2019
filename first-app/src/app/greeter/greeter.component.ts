@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GreeterComponent implements OnInit {
 
+  message = '[A dummy greet message]';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onGreetClick(userName : string){
+    this.message = `Hi ${userName}, Have a nice day!`;
   }
 
 }
