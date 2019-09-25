@@ -14,16 +14,8 @@ export class BugTrackerComponent implements OnInit {
     {name : 'User actions not recognized', isClosed : true}
   ];
 
-  /*
-  bugOperations : BugOperationsService ;
-
-  constructor(_bugOperations : BugOperationsService) {
-    this.bugOperations = _bugOperations;
-   }
-  */
-
   constructor(private bugOperations : BugOperationsService){
-    
+
   }
   ngOnInit() {
   }
