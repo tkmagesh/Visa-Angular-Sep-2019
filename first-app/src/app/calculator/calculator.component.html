@@ -6,4 +6,7 @@
 <input type="button" value="Subtract" (click)="model.subtract()">
 <input type="button" value="Multiply" (click)="model.multiply()">
 <input type="button" value="Divide" (click)="model.divide()">
-<app-calculator-result [data]="model.result"></app-calculator-result>
+<app-calculator-result 
+    *ngIf="model.result !== 0"
+    [data]="model.result">
+</app-calculator-result>

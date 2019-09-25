@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'first-app';
-
+  choice = '';
   constructor(){
     setTimeout(() => {
       this.title = 'My First Angular App';
