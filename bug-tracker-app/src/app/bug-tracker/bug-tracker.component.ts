@@ -9,9 +9,14 @@ import { BugOperationsService } from './services/bugOperations.service';
 })
 export class BugTrackerComponent implements OnInit {
 
+  bugSortBy : string = 'name';
+  bugSortDesc : boolean = false;
+
   bugsList : Bug[] = [
     {name : 'Server communication failure', isClosed : false},
-    {name : 'User actions not recognized', isClosed : true}
+    {name : 'User actions not recognized', isClosed : true},
+    {name : 'Application not responding', isClosed : true},
+    {name : 'Data integrity checks failed', isClosed : false},
   ];
 
   constructor(private bugOperations : BugOperationsService){
