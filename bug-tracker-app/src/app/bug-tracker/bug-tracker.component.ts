@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
+import { BugOperationsService } from './services/bugOperations.service';
 
 @Component({
   selector: 'app-bug-tracker',
@@ -13,18 +14,27 @@ export class BugTrackerComponent implements OnInit {
     {name : 'User actions not recognized', isClosed : true}
   ];
 
-  constructor() { }
+  /*
+  bugOperations : BugOperationsService ;
 
+  constructor(_bugOperations : BugOperationsService) {
+    this.bugOperations = _bugOperations;
+   }
+  */
+
+  constructor(private bugOperations : BugOperationsService){
+    
+  }
   ngOnInit() {
   }
 
   onAddNewClick(newBugName : string){
-    const newBug : Bug = { name : newBugName, isClosed : false};
+    const newBug : Bug = this.bugOperations.createNew(newBugName);
     this.bugsList.push(newBug);
   }
 
   onBugNameClick(bugToToggle : Bug){
-    bugToToggle.isClosed = !bugToToggle.isClosed;
+    this.bugOperations.toggle(bugToToggle);
   }
 
   onRemoveClosedClick(){
