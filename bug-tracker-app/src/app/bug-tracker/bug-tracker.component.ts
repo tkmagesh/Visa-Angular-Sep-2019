@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Bug } from './models/Bug';
 
 @Component({
   selector: 'app-bug-tracker',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BugTrackerComponent implements OnInit {
 
-  bugsList = [
+  bugsList : Bug[] = [
     {name : 'Server communication failure', isClosed : false},
     {name : 'User actions not recognized', isClosed : true}
   ];
@@ -18,11 +19,11 @@ export class BugTrackerComponent implements OnInit {
   }
 
   onAddNewClick(newBugName : string){
-    const newBug = { name : newBugName, isClosed : false};
+    const newBug : Bug = { name : newBugName, isClosed : false};
     this.bugsList.push(newBug);
   }
 
-  onBugNameClick(bugToToggle){
+  onBugNameClick(bugToToggle : Bug){
     bugToToggle.isClosed = !bugToToggle.isClosed;
   }
 
