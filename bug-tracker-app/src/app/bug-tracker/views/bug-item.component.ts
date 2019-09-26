@@ -13,7 +13,7 @@ import { BugOperationsService } from '../services/bugOperations.service';
             >
                 {{bug.name | trimText:40}}
             </span>
-            <div class="datetime">{{bug.createdAt}}</div>
+            <div class="datetime">{{bug.createdAt | elapsed}}</div>
         </li>
     `,
     changeDetection : ChangeDetectionStrategy.OnPush
