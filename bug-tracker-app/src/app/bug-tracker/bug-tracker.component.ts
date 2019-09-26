@@ -12,7 +12,7 @@ export class BugTrackerComponent implements OnInit {
   bugSortBy : string = 'name';
   bugSortDesc : boolean = false;
 
-  newBugName : string = '';
+  
 
   bugsList : Bug[] = [
     {name : 'Server communication failure', isClosed : false},
@@ -27,14 +27,13 @@ export class BugTrackerComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAddNewClick(){
-    const newBug : Bug = this.bugOperations.createNew(this.newBugName);
-    this.bugsList = [...this.bugsList, newBug];
-  }
-
   onBugNameClick(bugToToggle : Bug){
     let toggledBug = this.bugOperations.toggle(bugToToggle);
     this.bugsList = this.bugsList.map(bug => bug === bugToToggle ? toggledBug : bug);
+  }
+
+  onNewBugAdded(newBug : Bug){
+    this.bugsList = [...this.bugsList, newBug];
   }
 
   onRemoveClosedClick(){
