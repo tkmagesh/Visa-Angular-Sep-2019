@@ -12,6 +12,8 @@ export class BugTrackerComponent implements OnInit {
   bugSortBy : string = 'name';
   bugSortDesc : boolean = false;
 
+  newBugName : string = '';
+
   bugsList : Bug[] = [
     {name : 'Server communication failure', isClosed : false},
     {name : 'User actions not recognized', isClosed : true},
@@ -25,20 +27,19 @@ export class BugTrackerComponent implements OnInit {
   ngOnInit() {
   }
 
-  onAddNewClick(newBugName : string){
-    const newBug : Bug = this.bugOperations.createNew(newBugName);
-    this.bugsList.push(newBug);
+  onAddNewClick(){
+    const newBug : Bug = this.bugOperations.createNew(this.newBugName);
+    this.bugsList = [...this.bugsList, newBug];
   }
 
   onBugNameClick(bugToToggle : Bug){
-    this.bugOperations.toggle(bugToToggle);
+    let toggledBug = this.bugOperations.toggle(bugToToggle);
+    this.bugsList = this.bugsList.map(bug => bug === bugToToggle ? toggledBug : bug);
   }
 
   onRemoveClosedClick(){
     this.bugsList = this.bugsList.filter(bug => !bug.isClosed);
   }
 
-  getClosedCount(){
-    return this.bugsList.reduce((result, bug) => bug.isClosed ? ++result : result, 0)
-  }
+ 
 }
