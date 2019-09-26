@@ -14,22 +14,19 @@ export class BugTrackerComponent implements OnInit {
 
   
 
-  bugsList : Bug[] = [
-    {name : 'Server communication failure', isClosed : false},
-    {name : 'User actions not recognized', isClosed : true},
-    {name : 'Application not responding', isClosed : true},
-    {name : 'Data integrity checks failed', isClosed : false},
-  ];
+  bugsList : Bug[] = [];
 
   constructor(private bugOperations : BugOperationsService){
 
   }
   ngOnInit() {
+    this.bugsList = this.bugOperations.getAll();
   }
 
-  onBugNameClick(bugToToggle : Bug){
-    let toggledBug = this.bugOperations.toggle(bugToToggle);
-    this.bugsList = this.bugsList.map(bug => bug === bugToToggle ? toggledBug : bug);
+  
+
+  onBugEdited(toggledBug : Bug){
+    this.bugsList = this.bugsList.map(bug => bug.name === toggledBug.name ? toggledBug : bug);
   }
 
   onNewBugAdded(newBug : Bug){
@@ -37,7 +34,13 @@ export class BugTrackerComponent implements OnInit {
   }
 
   onRemoveClosedClick(){
-    this.bugsList = this.bugsList.filter(bug => !bug.isClosed);
+    this.bugsList
+      .filter(bug => bug.isClosed)
+      .forEach(closedBug => {
+        this.bugOperations.remove(closedBug);
+        this.bugsList.splice(this.bugsList.indexOf(closedBug), 1);
+      });
+
   }
 
  

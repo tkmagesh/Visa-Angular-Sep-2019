@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { BugTrackerComponent } from './bug-tracker/bug-tracker.component';
 import { BugStatsComponent } from './bug-tracker/views/bugStats.component';
 import { BugEditComponent } from './bug-tracker/views/bugEdit.component';
+import { BugItemComponent } from './bug-tracker/views/bug-item.component';
 
 import { BugOperationsService } from './bug-tracker/services/bugOperations.service';
 import { TrimTextPipe } from './bug-tracker/pipes/trimText.pipe';
 import { SortPipe } from './bug-tracker/pipes/sort.pipe';
 import { ClosedCountPipe } from './bug-tracker/pipes/closedCount.pipe';
+import { BugStorageService } from './bug-tracker/services/bugStorage.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { ClosedCountPipe } from './bug-tracker/pipes/closedCount.pipe';
     BugTrackerComponent,
     BugStatsComponent,
     BugEditComponent,
+    BugItemComponent,
     ClosedCountPipe,
     TrimTextPipe,
     SortPipe,
@@ -27,7 +30,8 @@ import { ClosedCountPipe } from './bug-tracker/pipes/closedCount.pipe';
     , FormsModule
   ],
   providers: [
-    BugOperationsService
+    BugOperationsService,
+    BugStorageService
   ],
   bootstrap: [AppComponent]
 })

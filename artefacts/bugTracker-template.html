@@ -51,6 +51,22 @@
             7. Sort the bugs
             8. Implement validations
             9. Persist the bugs in the browser local storage
+                window.localStorage (object)
+                ===================
+                * key/value store
+                * key has to be unique
+                * key & value must be strings
+                    (Use JSON.stringify & JSON.parse for serializationa nd deserialization)
+                * ~10 MB storage limit
+                * SOP (Same Origin Policy)
+                * APIs
+                ------
+                    - setItem(key, value)
+                    - getItem(key) => value
+                    - removeItem(key)
+                    - clear()
+                    - key(index) => key at index
+                    - length
             10. Display 'created at' for each bug
             11. Persist the bugs in the server
             12. Make the bugs accessible using unique urls (routing)
