@@ -1,0 +1,20 @@
+{
+  "bugs": [
+    {
+      "id": 1,
+      "name": "Application not responding",
+      "isClosed": false,
+      "createdAt": "2019-08-16T07:26:32.569Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Bug Tracker"
+    },
+    {
+      "id": 2,
+      "name": "Payroll Master"
+    }
+  ]
+}
