@@ -30,8 +30,11 @@ export class BugItemComponent{
     }
 
     onBugNameClick(bugToToggle : Bug){
-        let toggledBug = this.bugOperations.toggle(bugToToggle);
-        this.bugEdited.emit(toggledBug);    
+        //let toggledBug = this.bugOperations.toggle(bugToToggle);
+        //this.bugEdited.emit(toggledBug);    
+        this.bugOperations
+            .toggle(bugToToggle)
+            .subscribe(toggledBug => this.bugEdited.emit(toggledBug));
     }
 
 }

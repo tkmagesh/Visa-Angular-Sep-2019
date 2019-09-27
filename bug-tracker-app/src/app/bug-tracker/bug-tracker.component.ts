@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bug } from './models/Bug';
 import { BugOperationsService } from './services/bugOperations.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-bug-tracker',
@@ -20,7 +21,8 @@ export class BugTrackerComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.bugsList = this.bugOperations.getAll();
+    //this.bugsList = this.bugOperations.getAll();
+    this.loadBugs();
   }
 
   
@@ -34,13 +36,28 @@ export class BugTrackerComponent implements OnInit {
   }
 
   onRemoveClosedClick(){
+    /*
     this.bugsList
       .filter(bug => bug.isClosed)
       .forEach(closedBug => {
-        this.bugOperations.remove(closedBug);
-        this.bugsList.splice(this.bugsList.indexOf(closedBug), 1);
+        this.bugOperations
+          .remove(closedBug)
+          .subscribe(() => this.bugsList.splice(this.bugsList.indexOf(closedBug), 1))
+        ;
       });
+    */
+    const removeBugObservables = this.bugsList
+      .filter(bug => bug.isClosed)
+      .map(closedBug => this.bugOperations.remove(closedBug));
 
+    forkJoin(removeBugObservables)
+      .subscribe(() => this.loadBugs())
+  }
+  
+  private loadBugs(): void {
+    this.bugOperations
+        .getAll()
+        .subscribe(bugs => this.bugsList = bugs);
   }
 
  
