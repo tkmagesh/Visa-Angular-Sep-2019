@@ -76,7 +76,8 @@ export class BugTrackerComponent implements OnInit{
 	onBugNameClick(bugToToggle){
 		this.bugOperations
 			.toggle(bugToToggle)
-			.subscribe(toggledBug => this.bugs = this.bugs.map(bug => bug === bugToToggle ? toggledBug : bug));
+			//.subscribe(toggledBug => this.bugs = this.bugs.map(bug => bug === bugToToggle ? toggledBug : bug));
+			.subscribe(() => {});
 		
 	}
 

@@ -1,15 +1,9 @@
 {
   "bugs": [
     {
-      "id": 1,
-      "name": "Application not responding",
-      "isClosed": false,
-      "createdAt": "2019-08-16T07:26:32.569Z"
-    },
-    {
       "id": 2,
       "name": "Data integrity checks failed",
-      "isClosed": true,
+      "isClosed": false,
       "createdAt": "2019-09-27T06:34:45.852Z",
       "desc": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur aliquam id pariatur ipsa expedita nesciunt doloribus facilis architecto quisquam totam veniam odio, minima, labore deleniti, neque nam quia amet eveniet."
     }
